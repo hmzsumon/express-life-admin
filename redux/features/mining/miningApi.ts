@@ -1,4 +1,3 @@
-import { getCookie } from '@/utils/cookie';
 import { apiSlice } from '../api/apiSlice';
 
 export const miningApi = apiSlice.injectEndpoints({

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseUrl =
 	process.env.NODE_ENV === 'development'
 		? 'http://localhost:5005/api/v1'
-		: 'https://wfc-api.herokuapp.com/api/v1';
+		: 'https://express-life-9388765cfa58.herokuapp.com/api/v1';
 
 console.log('baseUrl', baseUrl);
 export const apiSlice = createApi({
@@ -32,6 +32,10 @@ export const apiSlice = createApi({
 		'Withdraws',
 		'MyWithdraws',
 		'Mining',
+		'Deposits',
+		'Deposit',
+		'Company',
+		'Notifications',
 	],
 	endpoints: (builder) => ({}),
 });

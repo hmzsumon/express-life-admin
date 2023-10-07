@@ -1,7 +1,6 @@
 // components/CopyToClipboard.tsx
 
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AiFillCopy } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 
 type CopyToClipboardProps = {
@@ -41,10 +40,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = ({ text }) => {
 					outline: 'none',
 				}}
 			>
-				<FontAwesomeIcon
-					icon={faCopy}
-					className={`text-${isCopied ? 'primary ' : 'success'}`}
-				/>
+				<AiFillCopy className={`text-${isCopied ? 'primary ' : 'success'}`} />
 			</button>
 		</div>
 	);

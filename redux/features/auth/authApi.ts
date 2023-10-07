@@ -184,6 +184,11 @@ export const authApi = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ['User'],
 		}),
+
+		// get all transactions
+		getAllTransactions: builder.query<any, void>({
+			query: () => '/getMyTransactions',
+		}),
 	}),
 });
 
@@ -203,4 +208,5 @@ export const {
 	useChangeEmailMutation,
 	useVerifyCodeForChangeEmailMutation,
 	useAddPhoneNumberMutation,
+	useGetAllTransactionsQuery,
 } = authApi;

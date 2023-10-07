@@ -4,7 +4,7 @@ import {
 	useGetNotificationsQuery,
 	useUpdateNotificationMutation,
 } from '@/redux/features/notifications/notificationApi';
-import useSound from 'use-sound';
+
 import socketIOClient from 'socket.io-client';
 import ioBaseUrl from '@/config/ioBaseUrl';
 const DropdownNotification = () => {
@@ -24,8 +24,6 @@ const DropdownNotification = () => {
 	const trigger = useRef<any>(null);
 	const dropdown = useRef<any>(null);
 
-	const [play, { stop }] = useSound('/assets/sounds/ring1.wav', { volume: 5 });
-
 	// handle notification click
 	const handleNotificationClick = async (notification: any) => {
 		const { _id } = notification;
@@ -42,7 +40,7 @@ const DropdownNotification = () => {
 		if (isError) {
 			console.log(error);
 		}
-	}, [u_isSuccess, notifications]);
+	}, [u_isSuccess, notifications, isError, error]);
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -58,7 +56,7 @@ const DropdownNotification = () => {
 
 		socket.on('notification', (data) => {
 			// console.log('data', data);
-			play();
+
 			setAllNotifications([...allNotifications, data]);
 			setNotificationCount(notificationCount + 1);
 			refetch();
@@ -69,7 +67,7 @@ const DropdownNotification = () => {
 			socket.disconnect();
 			// Remove the 'result-pop' event listener
 		};
-	}, [allNotifications, notificationCount, play]);
+	}, [allNotifications, notificationCount, refetch]);
 
 	useEffect(() => {
 		const clickHandler = ({ target }: MouseEvent) => {

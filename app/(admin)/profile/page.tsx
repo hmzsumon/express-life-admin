@@ -1,7 +1,10 @@
+'use client';
+
 import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
 import Image from 'next/image';
 
 import { Metadata } from 'next';
+import { useSelector } from 'react-redux';
 export const metadata: Metadata = {
 	title: 'Profile Page | Next.js E-commerce Dashboard Template',
 	description: 'This is Profile page for TailAdmin Next.js',
@@ -9,6 +12,7 @@ export const metadata: Metadata = {
 };
 
 const Profile = () => {
+	const { user } = useSelector((state: any) => state.auth);
 	return (
 		<>
 			<Breadcrumb pageName='Profile' />
@@ -100,9 +104,9 @@ const Profile = () => {
 					</div>
 					<div className='mt-4'>
 						<h3 className='mb-1.5 text-2xl font-semibold text-black dark:text-white'>
-							Danish Heilium
+							{user?.full_name}
 						</h3>
-						<p className='font-medium'>Ui/Ux Designer</p>
+						<p className='font-medium capitalize'>{user?.role}</p>
 						<div className='mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]'>
 							<div className='flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row'>
 								<span className='font-semibold text-black dark:text-white'>

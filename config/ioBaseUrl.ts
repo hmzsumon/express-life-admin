@@ -4,7 +4,7 @@ if (process.env.NODE_ENV === 'development') {
 	ioBaseUrl = 'http://localhost:5005';
 	console.log('Running in development mode');
 } else {
-	ioBaseUrl = 'https://wfcmining.com';
+	ioBaseUrl = 'https://express-life-9388765cfa58.herokuapp.com';
 	// Code specific to production mode
 	console.log('Running in production mode');
 }
