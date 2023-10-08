@@ -1,15 +1,8 @@
 'use client';
-
 import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
 import Image from 'next/image';
 
-import { Metadata } from 'next';
 import { useSelector } from 'react-redux';
-export const metadata: Metadata = {
-	title: 'Profile Page | Next.js E-commerce Dashboard Template',
-	description: 'This is Profile page for TailAdmin Next.js',
-	// other metadata
-};
 
 const Profile = () => {
 	const { user } = useSelector((state: any) => state.auth);
