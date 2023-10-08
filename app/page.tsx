@@ -2,17 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { fetchBaseQueryError } from '@/redux/helpers';
-import { Metadata } from 'next';
+
 import { useLoginUserMutation } from '@/redux/features/auth/authApi';
 import { useRouter } from 'next/navigation';
 import { PulseLoader } from 'react-spinners';
 import Link from 'next/link';
-
-export const metadata: Metadata = {
-	title: 'Express Life',
-	description: 'This is Home Blog page for TailAdmin Next.js',
-	// other metadata
-};
 
 export default function Home() {
 	const router = useRouter();
