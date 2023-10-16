@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import Image from 'next/image';
 import Deposits from '../../app/(admin)/deposit/page';
+import { useSelector } from 'react-redux';
 
 interface SidebarProps {
 	sidebarOpen: boolean;
@@ -11,6 +12,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+	const { user } = useSelector((state: any) => state.auth);
 	const pathname = usePathname();
 
 	const trigger = useRef<any>(null);
@@ -229,7 +231,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 							</li>
 							{/* <!-- Menu Item Profile --> */}
 
-							{/* <!-- Menu Item Forms --> */}
+							{/* <!-- Menu Item Wallet --> */}
 							<SidebarLinkGroup
 								activeCondition={
 									pathname === '/forms' || pathname.includes('forms')
@@ -335,45 +337,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 									);
 								}}
 							</SidebarLinkGroup>
-							{/* <!-- Menu Item Forms --> */}
-
-							{/* <!-- Menu Item Tables --> */}
-							<li>
-								<Link
-									href='/tables'
-									className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-										pathname.includes('tables') && 'bg-graydark dark:bg-meta-4'
-									}`}
-								>
-									<svg
-										className='fill-current'
-										width='18'
-										height='19'
-										viewBox='0 0 18 19'
-										fill='none'
-										xmlns='http://www.w3.org/2000/svg'
-									>
-										<g clipPath='url(#clip0_130_9756)'>
-											<path
-												d='M15.7501 0.55835H2.2501C1.29385 0.55835 0.506348 1.34585 0.506348 2.3021V15.8021C0.506348 16.7584 1.29385 17.574 2.27822 17.574H15.7782C16.7345 17.574 17.5501 16.7865 17.5501 15.8021V2.3021C17.522 1.34585 16.7063 0.55835 15.7501 0.55835ZM6.69385 10.599V6.4646H11.3063V10.5709H6.69385V10.599ZM11.3063 11.8646V16.3083H6.69385V11.8646H11.3063ZM1.77197 6.4646H5.45635V10.5709H1.77197V6.4646ZM12.572 6.4646H16.2563V10.5709H12.572V6.4646ZM2.2501 1.82397H15.7501C16.0313 1.82397 16.2563 2.04897 16.2563 2.33022V5.2271H1.77197V2.3021C1.77197 2.02085 1.96885 1.82397 2.2501 1.82397ZM1.77197 15.8021V11.8646H5.45635V16.3083H2.2501C1.96885 16.3083 1.77197 16.0834 1.77197 15.8021ZM15.7501 16.3083H12.572V11.8646H16.2563V15.8021C16.2563 16.0834 16.0313 16.3083 15.7501 16.3083Z'
-												fill=''
-											/>
-										</g>
-										<defs>
-											<clipPath id='clip0_130_9756'>
-												<rect
-													width='18'
-													height='18'
-													fill='white'
-													transform='translate(0 0.052124)'
-												/>
-											</clipPath>
-										</defs>
-									</svg>
-									Tables
-								</Link>
-							</li>
-							{/* <!-- Menu Item Tables --> */}
+							{/* <!-- Menu Item Wallet --> */}
 
 							{/* <!-- Menu Item Settings --> */}
 							<li>
@@ -417,6 +381,49 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 								</Link>
 							</li>
 							{/* <!-- Menu Item Settings --> */}
+
+							{user?.role === 'admin' && (
+								<>
+									{/* <!-- Menu Item Deposit Method --> */}
+									<li>
+										<Link
+											href='/deposit/deposit-methods'
+											className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+												pathname.includes('deposit-methods') &&
+												'bg-graydark dark:bg-meta-4'
+											}`}
+										>
+											<svg
+												className='fill-current'
+												width='18'
+												height='19'
+												viewBox='0 0 18 19'
+												fill='none'
+												xmlns='http://www.w3.org/2000/svg'
+											>
+												<g clipPath='url(#clip0_130_9756)'>
+													<path
+														d='M15.7501 0.55835H2.2501C1.29385 0.55835 0.506348 1.34585 0.506348 2.3021V15.8021C0.506348 16.7584 1.29385 17.574 2.27822 17.574H15.7782C16.7345 17.574 17.5501 16.7865 17.5501 15.8021V2.3021C17.522 1.34585 16.7063 0.55835 15.7501 0.55835ZM6.69385 10.599V6.4646H11.3063V10.5709H6.69385V10.599ZM11.3063 11.8646V16.3083H6.69385V11.8646H11.3063ZM1.77197 6.4646H5.45635V10.5709H1.77197V6.4646ZM12.572 6.4646H16.2563V10.5709H12.572V6.4646ZM2.2501 1.82397H15.7501C16.0313 1.82397 16.2563 2.04897 16.2563 2.33022V5.2271H1.77197V2.3021C1.77197 2.02085 1.96885 1.82397 2.2501 1.82397ZM1.77197 15.8021V11.8646H5.45635V16.3083H2.2501C1.96885 16.3083 1.77197 16.0834 1.77197 15.8021ZM15.7501 16.3083H12.572V11.8646H16.2563V15.8021C16.2563 16.0834 16.0313 16.3083 15.7501 16.3083Z'
+														fill=''
+													/>
+												</g>
+												<defs>
+													<clipPath id='clip0_130_9756'>
+														<rect
+															width='18'
+															height='18'
+															fill='white'
+															transform='translate(0 0.052124)'
+														/>
+													</clipPath>
+												</defs>
+											</svg>
+											Deposit Methods
+										</Link>
+									</li>
+									{/* <!-- Menu Item Deposit Method --> */}
+								</>
+							)}
 						</ul>
 					</div>
 

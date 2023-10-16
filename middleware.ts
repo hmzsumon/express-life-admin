@@ -20,5 +20,14 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-	matcher: ['/', '/dashboard', '/security'],
+	matcher: [
+		'/',
+		'/dashboard',
+		'/security',
+		'/deposit',
+		'/withdraw',
+		'/deposit/[depositId]',
+		'/withdraw/[withdrawId]',
+		'/deposit/deposit-methods',
+	],
 };

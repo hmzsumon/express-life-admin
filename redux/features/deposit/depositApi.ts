@@ -32,6 +32,31 @@ export const depositApi = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ['Deposit', 'Deposits'],
 		}),
+
+		// add deposit method
+		addDepositMethod: builder.mutation<any, any>({
+			query: (data) => ({
+				url: `/add-deposit-method`,
+				method: 'POST',
+				body: data,
+			}),
+			invalidatesTags: ['Deposit', 'Deposits'],
+		}),
+
+		// get all deposit methods
+		getDepositMethods: builder.query<any, void>({
+			query: () => '/deposit-methods',
+			providesTags: ['DepositMethods'],
+		}),
+
+		// activate deposit method
+		activateDepositMethod: builder.mutation<any, any>({
+			query: (id) => ({
+				url: `/deposit-method/active/${id}`,
+				method: 'PUT',
+			}),
+			invalidatesTags: ['DepositMethods'],
+		}),
 	}),
 });
 
@@ -40,4 +65,7 @@ export const {
 	useGetDepositByIdQuery,
 	useApproveDepositMutation,
 	useRejectDepositMutation,
+	useAddDepositMethodMutation,
+	useGetDepositMethodsQuery,
+	useActivateDepositMethodMutation,
 } = depositApi;

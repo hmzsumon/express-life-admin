@@ -235,6 +235,13 @@ const Deposit = ({ params }: { params: { depositId: string } }) => {
 					</li>
 				</div>
 				{/* Date */}
+				<hr className='my-2 ' />
+				<div className='grid grid-cols-2'>
+					<li>
+						<p className='capitalize'>Deposit By</p>
+					</li>
+					<li className='text-end'>{deposit?.method?.username}</li>
+				</div>
 			</div>
 			{status === 'pending' && (
 				<div className='grid gap-2 mt-2'>
