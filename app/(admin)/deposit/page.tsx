@@ -159,7 +159,7 @@ const Deposits = () => {
 						className='d-flex align-items-center justify-content-center w-100'
 						style={{ cursor: 'pointer' }}
 					>
-						<Link href={`/withdraw/${params.row.id}`} passHref>
+						<Link href={`/deposit/${params.row.id}`} passHref>
 							<AiFillEye className='text-2xl text-primary' />
 						</Link>
 					</div>
