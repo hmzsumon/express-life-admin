@@ -6,6 +6,8 @@ const initialState = {
 	token: null,
 	isAuthenticated: false,
 	email: null,
+	them: 'light',
+	color_theme: 'light',
 };
 
 export const authSlice = createSlice({
@@ -32,8 +34,13 @@ export const authSlice = createSlice({
 		setEmail: (state, action) => {
 			state.email = action.payload.email;
 		},
+
+		setTheme: (state, action) => {
+			state.them = action.payload.them;
+		},
 	},
 });
 
-export const { setBtnLogin, setUser, logoutUser, setEmail } = authSlice.actions;
+export const { setBtnLogin, setUser, logoutUser, setEmail, setTheme } =
+	authSlice.actions;
 export default authSlice.reducer;

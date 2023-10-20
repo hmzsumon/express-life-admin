@@ -14,6 +14,7 @@ import appReducer from './features/appSlice';
 import { apiSlice } from './features/api/apiSlice';
 import authReducer from './features/auth/authSlice';
 import miningReducer from './features/mining/miningSlice';
+import colorThemReducer from './colorThemSlice';
 
 const persistConfig = {
 	key: 'root',
@@ -26,6 +27,7 @@ export const rootReducer = combineReducers({
 	app: appReducer,
 	auth: authReducer,
 	mining: miningReducer,
+	colorThem: colorThemReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

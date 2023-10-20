@@ -15,12 +15,6 @@ export interface IUser {
 }
 export const authApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
-		// get users from api with typescript
-		getUsers: builder.query<any, void>({
-			query: () => '/users',
-			providesTags: ['Users'],
-		}),
-
 		// register user
 		registerUser: builder.mutation<IUser, any>({
 			query: (body) => ({
@@ -193,7 +187,6 @@ export const authApi = apiSlice.injectEndpoints({
 });
 
 export const {
-	useGetUsersQuery,
 	useRegisterUserMutation,
 	useVerifyEmailMutation,
 	useCreatePasswordMutation,

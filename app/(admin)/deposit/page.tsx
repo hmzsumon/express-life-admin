@@ -1,10 +1,14 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useGetDepositsQuery } from '@/redux/features/deposit/depositApi';
 import Link from 'next/link';
 import { formatDate } from '@/lib/functions';
 import { AiFillEye } from 'react-icons/ai';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { SyncLoader } from 'react-spinners';
+import { useSelector } from 'react-redux';
+
 type Deposit = {
 	id: string;
 	name: string;
@@ -14,7 +18,32 @@ type Deposit = {
 	date: string;
 	tnx_id: string;
 };
+
 const Deposits = () => {
+	const { them } = useSelector((state: any) => state.colorThem);
+	// get color-them from local storage
+	const [theme, setTheme] = React.useState(
+		createTheme({
+			palette: {
+				mode: 'light', // Default to 'light' mode
+				// You can customize other palette settings here
+			},
+		})
+	);
+
+	// Use useEffect to watch for changes in the theme preference in local storage
+	useEffect(() => {
+		// Update the theme based on the stored preference
+		setTheme(
+			createTheme({
+				palette: {
+					mode: them === 'dark' ? 'dark' : 'light',
+					// Add other palette settings here
+				},
+			})
+		);
+	}, [them]);
+
 	const { data, isLoading, isSuccess, isError, error } = useGetDepositsQuery();
 	const { deposits } = data || [];
 	const [selectedTab, setSelectedTab] = useState('all');
@@ -103,6 +132,20 @@ const Deposits = () => {
 			},
 		},
 		{
+			field: 'approved_by',
+			headerName: 'Approved By',
+			width: 150,
+			renderCell: (params: any) => (
+				<div className='flex items-center gap-2 text-xs'>
+					{params.row.status === 'approved' ? (
+						<p>{params.row.approved_by}</p>
+					) : (
+						<p>Not Approved</p>
+					)}
+				</div>
+			),
+		},
+		{
 			field: 'action',
 			headerName: 'Action',
 			width: 60,
@@ -133,23 +176,27 @@ const Deposits = () => {
 				status: deposit.status,
 				date: formatDate(deposit.createdAt),
 				tnx_id: deposit.transactionId,
+				approved_by: deposit.approved_by,
 			});
 		});
 	return (
 		<div>
-			<DataGrid
-				rows={rows}
-				columns={columns}
-				sx={{
-					boxShadow: 2,
-					border: 2,
-					borderColor: '#fff',
-					'& .MuiDataGrid-cell:hover': {
-						color: 'primary.main',
-					},
-					color: '#fff',
-				}}
-			/>
+			{isLoading ? (
+				<div className='flex items-center justify-center '>
+					<SyncLoader color='#EAB308' size={10} />
+				</div>
+			) : (
+				<ThemeProvider theme={theme}>
+					<DataGrid
+						rows={rows}
+						columns={columns}
+						sx={{
+							boxShadow: 2,
+							border: 2,
+						}}
+					/>
+				</ThemeProvider>
+			)}
 		</div>
 	);
 };
