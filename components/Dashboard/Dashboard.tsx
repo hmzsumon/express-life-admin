@@ -69,12 +69,7 @@ const Dashboard: React.FC = () => {
 				</div>
 			) : (
 				<div className='grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5'>
-					<CardDataStats
-						title='Total Users'
-						total={company?.users?.total_users - 15 || 0}
-						rate='0.95%'
-						levelDown
-					>
+					<CardDataStats title='Total Users' total='14' rate='0.95%' levelDown>
 						<FaUsers className='fill-primary dark:fill-white text-xl' />
 					</CardDataStats>
 					<CardDataStats
