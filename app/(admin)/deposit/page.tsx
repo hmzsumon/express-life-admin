@@ -8,6 +8,7 @@ import { AiFillEye } from 'react-icons/ai';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { SyncLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 type Deposit = {
 	id: string;
@@ -138,7 +139,10 @@ const Deposits = () => {
 			renderCell: (params: any) => (
 				<div className='flex items-center gap-2 text-xs'>
 					{params.row.status === 'approved' ? (
-						<p>{params.row.approved_by}</p>
+						<>
+							<p>{params.row.approved_by}</p>
+							<FaExternalLinkAlt className='text-sm cursor-pointer text-primary' />
+						</>
 					) : (
 						<p>Not Approved</p>
 					)}
