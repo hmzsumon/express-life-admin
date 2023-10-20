@@ -8,8 +8,9 @@ import { AiFillEye } from 'react-icons/ai';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { SyncLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
+import { useGetWithdrawsQuery } from '@/redux/features/withdraw/withdrawApi';
 
-type Deposit = {
+type Withdraw = {
 	id: string;
 	name: string;
 	customer_id: string;
@@ -19,7 +20,7 @@ type Deposit = {
 	tnx_id: string;
 };
 
-const Deposits = () => {
+const Withdraw = () => {
 	const { them } = useSelector((state: any) => state.colorThem);
 	// get color-them from local storage
 	const [theme, setTheme] = React.useState(
@@ -44,17 +45,24 @@ const Deposits = () => {
 		);
 	}, [them]);
 
-	const { data, isLoading, isSuccess, isError, error } = useGetDepositsQuery();
-	const { deposits } = data || [];
+	const { data, isLoading, isSuccess, isError, error } = useGetWithdrawsQuery();
+	const { withdraws } = data || [];
 	const [selectedTab, setSelectedTab] = useState('all');
+
 	// Filter deposits based on selected tab's criteria
-	const filteredDeposits = deposits?.filter((deposit: Deposit) => {
+	const filteredWithdraws = withdraws?.filter((deposit: Withdraw) => {
 		if (selectedTab === 'all') return true;
 		if (selectedTab === 'new') return deposit.status === 'pending';
 		if (selectedTab === 'approve') return deposit.status === 'approved';
 		if (selectedTab === 'rejected') return deposit.status === 'rejected';
 		return true;
 	});
+
+	// Calculate total deposit amount based on the selected tab's criteria
+	const totalAmount = filteredWithdraws?.reduce((total: any, withdraw: any) => {
+		return total + withdraw.amount;
+	}, 0);
+
 	const columns: GridColDef<any>[] = [
 		{
 			field: 'date',
@@ -77,6 +85,26 @@ const Deposits = () => {
 				</div>
 			),
 		},
+		{
+			field: 'name',
+			headerName: 'Name',
+			width: 200,
+			renderCell: (params: any) => (
+				<div className='flex items-center gap-2 text-xs'>
+					<p>{params.row.name}</p>
+				</div>
+			),
+		},
+		{
+			field: 'method',
+			headerName: 'Method',
+			width: 150,
+			renderCell: (params: any) => (
+				<div className='flex items-center gap-2 text-xs'>
+					<p>{params.row.method.name}</p>
+				</div>
+			),
+		},
 
 		{
 			field: 'amount',
@@ -90,16 +118,6 @@ const Deposits = () => {
 							currency: 'USD',
 						})}
 					</p>
-				</div>
-			),
-		},
-		{
-			field: 'tnx_id',
-			headerName: 'Transaction ID',
-			width: 300,
-			renderCell: (params: any) => (
-				<div className='flex items-center gap-2 text-xs'>
-					<p>{params.row.tnx_id}</p>
 				</div>
 			),
 		},
@@ -132,20 +150,6 @@ const Deposits = () => {
 			},
 		},
 		{
-			field: 'approved_by',
-			headerName: 'Approved By',
-			width: 150,
-			renderCell: (params: any) => (
-				<div className='flex items-center gap-2 text-xs'>
-					{params.row.status === 'approved' ? (
-						<p>{params.row.approved_by}</p>
-					) : (
-						<p>Not Approved</p>
-					)}
-				</div>
-			),
-		},
-		{
 			field: 'action',
 			headerName: 'Action',
 			width: 60,
@@ -166,17 +170,16 @@ const Deposits = () => {
 
 	const rows: any = [];
 
-	deposits &&
-		filteredDeposits.map((deposit: any) => {
+	withdraws &&
+		filteredWithdraws?.map((withdraw: any) => {
 			return rows.unshift({
-				id: deposit._id,
-				name: deposit.name,
-				customer_id: deposit.customer_id,
-				amount: deposit.amount,
-				status: deposit.status,
-				date: formatDate(deposit.createdAt),
-				tnx_id: deposit.transactionId,
-				approved_by: deposit.approved_by,
+				id: withdraw._id,
+				name: withdraw.username,
+				customer_id: withdraw.customer_id,
+				amount: withdraw.amount,
+				status: withdraw.status,
+				method: withdraw.method,
+				date: formatDate(withdraw.createdAt),
 			});
 		});
 	return (
@@ -201,4 +204,4 @@ const Deposits = () => {
 	);
 };
 
-export default Deposits;
+export default Withdraw;
