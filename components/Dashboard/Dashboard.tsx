@@ -16,6 +16,7 @@ import dynamic from 'next/dynamic';
 import { useGetCompanyQuery } from '@/redux/features/company/companyApi';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import ScaleLoader from 'react-spinners/ScaleLoader';
+import OwnerList from './OwnerList';
 
 const MapOne = dynamic(() => import('../Maps/MapOne'), {
 	ssr: false,
@@ -64,7 +65,7 @@ const Dashboard: React.FC = () => {
 		<>
 			<Breadcrumb pageName='Dashboard' />
 			{isLoading ? (
-				<div className=' flex items-center justify-center'>
+				<div className='flex items-center justify-center '>
 					<ScaleLoader color='#36d7b7' />
 				</div>
 			) : (
@@ -75,7 +76,7 @@ const Dashboard: React.FC = () => {
 						rate='0.95%'
 						levelDown
 					>
-						<FaUsers className='fill-primary dark:fill-white text-xl' />
+						<FaUsers className='text-xl fill-primary dark:fill-white' />
 					</CardDataStats>
 					<CardDataStats
 						title='Total Deposit'
@@ -83,7 +84,7 @@ const Dashboard: React.FC = () => {
 						rate='0.43%'
 						levelUp
 					>
-						<FcMultipleInputs className='fill-primary dark:fill-white text-xl' />
+						<FcMultipleInputs className='text-xl fill-primary dark:fill-white' />
 					</CardDataStats>
 					<CardDataStats
 						title='Total Withdraw'
@@ -91,7 +92,7 @@ const Dashboard: React.FC = () => {
 						rate='4.35%'
 						levelUp
 					>
-						<FaHandHoldingUsd className='fill-primary dark:fill-white text-xl' />
+						<FaHandHoldingUsd className='text-xl fill-primary dark:fill-white' />
 					</CardDataStats>
 					<CardDataStats
 						title='Users Balance'
@@ -99,7 +100,7 @@ const Dashboard: React.FC = () => {
 						rate='2.59%'
 						levelUp
 					>
-						<FcCurrencyExchange className='fill-primary dark:fill-white text-xl' />
+						<FcCurrencyExchange className='text-xl fill-primary dark:fill-white' />
 					</CardDataStats>
 					<CardDataStats
 						title='Rank Value'
@@ -107,7 +108,7 @@ const Dashboard: React.FC = () => {
 						rate='2.59%'
 						levelUp
 					>
-						<FcCurrencyExchange className='fill-primary dark:fill-white text-xl' />
+						<FcCurrencyExchange className='text-xl fill-primary dark:fill-white' />
 					</CardDataStats>
 					<CardDataStats
 						title='Coin Value'
@@ -115,7 +116,7 @@ const Dashboard: React.FC = () => {
 						rate='2.59%'
 						levelUp
 					>
-						<FcCurrencyExchange className='fill-primary dark:fill-white text-xl' />
+						<FcCurrencyExchange className='text-xl fill-primary dark:fill-white' />
 					</CardDataStats>
 				</div>
 			)}

@@ -37,6 +37,8 @@ export const apiSlice = createApi({
 		'Company',
 		'Notifications',
 		'DepositMethods',
+		'Owners',
+		'Owner',
 	],
 	endpoints: (builder) => ({}),
 });
