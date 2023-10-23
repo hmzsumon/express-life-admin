@@ -21,6 +21,17 @@ export const withdrawApi = apiSlice.injectEndpoints({
 				method: 'PUT',
 				body: data,
 			}),
+			invalidatesTags: ['Withdraws', 'Withdraw'],
+		}),
+
+		// update /update/allowToWithdraw
+		updateAllowToWithdraw: builder.mutation<any, any>({
+			query: (data) => ({
+				url: `/update/allowToWithdraw`,
+				method: 'PUT',
+				body: data,
+			}),
+			invalidatesTags: ['Owner', 'Owners'],
 		}),
 	}),
 });
@@ -29,4 +40,5 @@ export const {
 	useGetWithdrawsQuery,
 	useGetWithdrawByIdQuery,
 	useApproveWithdrawMutation,
+	useUpdateAllowToWithdrawMutation,
 } = withdrawApi;

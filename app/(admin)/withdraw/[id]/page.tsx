@@ -95,13 +95,13 @@ const Withdraw = ({ params }: { params: { id: string } }) => {
 		if (a_isSuccess) {
 			handleClose();
 			toast.success('Withdraw approved successfully');
-			router.push('/withdraws');
+			router.push('/withdraw');
 		}
 
 		if (a_isError && a_error) {
 			toast.error((a_error as fetchBaseQueryError).data?.message);
 		}
-	}, [a_isSuccess, a_isError]);
+	}, [a_isSuccess, a_isError, a_error, router]);
 
 	// reject handler
 	const handleReject = async () => {
@@ -260,7 +260,7 @@ const Withdraw = ({ params }: { params: { id: string } }) => {
 											<span>Enter Transaction id</span>
 										</label>
 										<input
-											className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary'
+											className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-white'
 											placeholder='Enter Transaction id'
 											aria-label='Username'
 											aria-describedby='basic-addon1'
