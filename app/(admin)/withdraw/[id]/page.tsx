@@ -9,6 +9,7 @@ import CopyToClipboard from '@/lib/CopyToClipboard';
 import {
 	useApproveWithdrawMutation,
 	useGetWithdrawByIdQuery,
+	useRejectWithdrawMutation,
 } from '@/redux/features/withdraw/withdrawApi';
 import { useRejectDepositMutation } from '@/redux/features/deposit/depositApi';
 import { fetchBaseQueryError } from '@/redux/helpers';
@@ -53,13 +54,20 @@ const Withdraw = ({ params }: { params: { id: string } }) => {
 	const [reason, setReason] = useState('Transaction Id not matching');
 	const [tnxId, setTnxId] = useState('');
 	const [open, setOpen] = React.useState(false);
+	const [open2, setOpen2] = React.useState(false);
 
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
+	const handleClickOpen2 = () => {
+		setOpen2(true);
+	};
 
 	const handleClose = () => {
 		setOpen(false);
+	};
+	const handleClose2 = () => {
+		setOpen2(false);
 	};
 
 	const [
@@ -73,14 +81,14 @@ const Withdraw = ({ params }: { params: { id: string } }) => {
 	] = useApproveWithdrawMutation();
 
 	const [
-		rejectDeposit,
+		rejectWithdraw,
 		{
 			isSuccess: r_isSuccess,
 			isError: r_isError,
 			error: r_error,
 			isLoading: r_isLoading,
 		},
-	] = useRejectDepositMutation();
+	] = useRejectWithdrawMutation();
 
 	// approve handler
 	const handleApprove = async () => {
@@ -109,19 +117,19 @@ const Withdraw = ({ params }: { params: { id: string } }) => {
 			id: _id,
 			reason,
 		};
-		rejectDeposit(data);
+		rejectWithdraw(data);
 	};
 
 	useEffect(() => {
 		if (r_isSuccess) {
-			toast.success('Deposit rejected successfully');
-			router.push('/deposit');
+			toast.success('Withdraw rejected successfully');
+			router.push('/withdraw');
 		}
 
 		if (r_isError && r_error) {
 			toast.error((r_error as fetchBaseQueryError).data?.message);
 		}
-	}, [r_isSuccess, r_isError]);
+	}, [r_isSuccess, r_isError, r_error, router]);
 
 	return (
 		<div>
@@ -195,7 +203,7 @@ const Withdraw = ({ params }: { params: { id: string } }) => {
 						</>
 					)}
 
-					<li>
+					<li className=' flex items-center justify-between'>
 						<span>Date Time</span>
 						<span className='float-end '>
 							{new Date(withdraw?.createdAt).toLocaleDateString('en-US', {
@@ -217,6 +225,14 @@ const Withdraw = ({ params }: { params: { id: string } }) => {
 									<CopyToClipboard text={method?.pay_id} />
 								</span>
 							</li>
+
+							<li className=' flex items-center justify-between'>
+								<span>Binance ID</span>
+								<span className='gap-1  flex'>
+									{method?.binance_id}
+									<CopyToClipboard text={method?.binance_id} />
+								</span>
+							</li>
 						</>
 					)}
 					{status === 'pending' && (
@@ -229,7 +245,7 @@ const Withdraw = ({ params }: { params: { id: string } }) => {
 							</button>{' '}
 							<button
 								className='inline-flex items-center justify-center rounded-md bg-red-500 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10'
-								onClick={handleClickOpen}
+								onClick={handleClickOpen2}
 							>
 								<span>Reject</span>
 							</button>{' '}
@@ -247,13 +263,13 @@ const Withdraw = ({ params }: { params: { id: string } }) => {
 						aria-describedby='alert-dialog-description'
 					>
 						<DialogTitle id='alert-dialog-title'>
-							{'Approve Deposit'}
+							{'Approve Withdraw'}
 						</DialogTitle>
 						<DialogContent>
 							<DialogContentText id='alert-dialog-description'>
 								<div>
 									<p className=' text-warning'>
-										Are you sure you want to approve this deposit?
+										Are you sure you want to approve this withdraw?
 									</p>
 									<div className=' flex flex-col'>
 										<label htmlFor='basic-url'>
@@ -282,38 +298,46 @@ const Withdraw = ({ params }: { params: { id: string } }) => {
 			</>
 			{/* for reject */}
 			<>
-				{/* <Modal show={show2} onHide={handleClose2} animation={false}>
-					<Modal.Header closeButton>
-						<Modal.Title>
-							<span>Reject Deposit</span>
-						</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						<p className=' text-warning'>
-							Are you sure you want to reject this deposit?
-						</p>
-						<div>
-							<Form.Label htmlFor='basic-url'>
-								<span>Enter reason for rejection</span>
-							</Form.Label>
-							<Form.Control
-								placeholder='Enter reason for rejection'
-								aria-label='Username'
-								aria-describedby='basic-addon1'
-								value={reason}
-								onChange={(e) => setReason(e.target.value)}
-							/>
-						</div>
-					</Modal.Body>
-					<Modal.Footer>
-						<Button variant='secondary' onClick={handleClose2}>
-							Close
-						</Button>
-						<Button variant='danger' onClick={handleReject}>
-							Confirm Reject
-						</Button>
-					</Modal.Footer>
-				</Modal> */}
+				<div>
+					<Dialog
+						open={open2}
+						onClose={handleClose2}
+						aria-labelledby='alert-dialog-title'
+						aria-describedby='alert-dialog-description'
+					>
+						<DialogTitle id='alert-dialog-title'>
+							{'Reject Withdraw'}
+						</DialogTitle>
+						<DialogContent>
+							<DialogContentText id='alert-dialog-description'>
+								<div>
+									<p className=' text-warning'>
+										Are you sure you want to Reject this Withdraw?
+									</p>
+									<div className=' flex flex-col'>
+										<label htmlFor='basic-url'>
+											<span>Enter Reason</span>
+										</label>
+										<input
+											className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-white'
+											placeholder='Enter Reason'
+											aria-label='Username'
+											aria-describedby='basic-addon1'
+											value={reason}
+											onChange={(e) => setReason(e.target.value)}
+										/>
+									</div>
+								</div>
+							</DialogContentText>
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={handleClose2}>Close</Button>
+							<Button onClick={handleReject} disabled={reason === ''}>
+								Reject
+							</Button>
+						</DialogActions>
+					</Dialog>
+				</div>
 			</>
 		</div>
 	);
