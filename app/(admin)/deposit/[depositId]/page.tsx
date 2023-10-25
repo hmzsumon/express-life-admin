@@ -101,7 +101,7 @@ const Deposit = ({ params }: { params: { depositId: string } }) => {
 	const handleReject = async () => {
 		const data = {
 			id: _id,
-			reason: 'Transaction Id not matching',
+			reason: reason,
 		};
 		rejectDeposit(data);
 	};
