@@ -78,6 +78,15 @@ const Dashboard: React.FC = () => {
 					>
 						<FaUsers className='text-xl fill-primary dark:fill-white' />
 					</CardDataStats>
+
+					<CardDataStats
+						title='Total Active Users'
+						total={company?.users?.total_active_users || 0}
+						rate='0.95%'
+						levelDown
+					>
+						<FaUsers className='text-xl fill-primary dark:fill-white' />
+					</CardDataStats>
 					<CardDataStats
 						title='Total Deposit'
 						total={totalDeposit}
