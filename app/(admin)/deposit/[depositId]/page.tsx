@@ -32,6 +32,7 @@ const Deposit = ({ params }: { params: { depositId: string } }) => {
 	const {
 		amount,
 		createdAt,
+		approvedAt,
 		customer_id,
 		is_approved,
 		is_rejected,
@@ -184,6 +185,19 @@ const Deposit = ({ params }: { params: { depositId: string } }) => {
 						})}
 					</li>
 				</div>
+				<hr className='my-2 ' />
+				<div className='grid grid-cols-2'>
+					<li>Approved At</li>
+					<li className='text-end'>
+						{new Date(approvedAt).toLocaleDateString('en-US', {
+							year: 'numeric',
+							month: 'short',
+							day: 'numeric',
+							hour: 'numeric',
+							minute: 'numeric',
+						})}
+					</li>
+				</div>
 				{/* Date */}
 				<hr className='my-2 ' />
 				<div className='grid grid-cols-2'>
@@ -254,12 +268,12 @@ const Deposit = ({ params }: { params: { depositId: string } }) => {
 									<p className=' text-warning'>
 										Are you sure you want to Reject this Deposit?
 									</p>
-									<div className=' flex flex-col'>
+									<div className='flex flex-col '>
 										<label htmlFor='basic-url'>
 											<span>Enter Reason</span>
 										</label>
 										<input
-											className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-white'
+											className='w-full py-4 pl-6 pr-10 text-white bg-transparent border rounded-lg outline-none border-stroke focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary'
 											placeholder='Enter Reason'
 											aria-label='Username'
 											aria-describedby='basic-addon1'
