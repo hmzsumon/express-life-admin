@@ -7,6 +7,7 @@ import { useLoginUserMutation } from '@/redux/features/auth/authApi';
 import { useRouter } from 'next/navigation';
 import { PulseLoader } from 'react-spinners';
 import Link from 'next/link';
+import TawkTo3 from '@/lib/TawkTo3';
 
 export default function Home() {
 	const router = useRouter();
@@ -190,6 +191,7 @@ export default function Home() {
 					</form>
 				</div>
 			</div>
+			<TawkTo3 />
 		</div>
 	);
 }
