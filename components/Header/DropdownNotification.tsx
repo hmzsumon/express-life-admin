@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import {
 	useGetNotificationsQuery,
@@ -20,6 +20,7 @@ const DropdownNotification = () => {
 	const [notificationCount, setNotificationCount] = useState(0);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const [notifying, setNotifying] = useState(true);
+	const [isSoundPlaying, setIsSoundPlaying] = useState<boolean>(false);
 
 	const trigger = useRef<any>(null);
 	const dropdown = useRef<any>(null);
@@ -30,6 +31,17 @@ const DropdownNotification = () => {
 		const id = _id;
 		await updateNotification(id);
 	};
+
+	const playNotificationSound = useCallback(() => {
+		const audio = new Audio('/sounds/admin-notification.wav');
+		if (isSoundPlaying) {
+			audio.pause();
+		} else {
+			// audio.loop = true;
+			audio.play();
+		}
+		setIsSoundPlaying(!isSoundPlaying);
+	}, [isSoundPlaying]);
 
 	useEffect(() => {
 		if (u_isSuccess) {
@@ -57,6 +69,7 @@ const DropdownNotification = () => {
 		socket.on('notification', (data) => {
 			// console.log('data', data);
 
+			playNotificationSound();
 			setAllNotifications([...allNotifications, data]);
 			setNotificationCount(notificationCount + 1);
 			refetch();
@@ -67,7 +80,14 @@ const DropdownNotification = () => {
 			socket.disconnect();
 			// Remove the 'result-pop' event listener
 		};
-	}, [allNotifications, notificationCount, refetch]);
+	}, [
+		allNotifications,
+		notificationCount,
+		refetch,
+		notifying,
+		isSoundPlaying,
+		playNotificationSound,
+	]);
 
 	useEffect(() => {
 		const clickHandler = ({ target }: MouseEvent) => {
@@ -101,6 +121,7 @@ const DropdownNotification = () => {
 				onClick={() => {
 					setNotifying(false);
 					setDropdownOpen(!dropdownOpen);
+					setIsSoundPlaying(false);
 				}}
 				className='relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-white'
 			>
