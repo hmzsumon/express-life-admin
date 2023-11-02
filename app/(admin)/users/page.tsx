@@ -9,6 +9,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { SyncLoader } from 'react-spinners';
 import { useSelector } from 'react-redux';
 import { useGetUsersQuery } from '@/redux/features/admin/adminUsersApi';
+import { useRouter } from 'next/navigation';
 
 type Deposit = {
 	id: string;
@@ -21,6 +22,8 @@ type Deposit = {
 };
 
 const Users = () => {
+	const router = useRouter();
+	const { user } = useSelector((state: any) => state.auth);
 	const { them } = useSelector((state: any) => state.colorThem);
 	// get color-them from local storage
 	const [theme, setTheme] = React.useState(
@@ -44,6 +47,13 @@ const Users = () => {
 			})
 		);
 	}, [them]);
+
+	// check if user is admin or not and redirect to dashboard
+	useEffect(() => {
+		if (user?.role !== 'admin') {
+			router.push('/dashboard');
+		}
+	}, [user, router]);
 
 	const { data, isLoading, isSuccess, isError, error } = useGetUsersQuery();
 	const { users } = data || [];
@@ -205,18 +215,18 @@ const Users = () => {
 				</div>
 			) : (
 				<>
-					<div className=' my-10'>
+					<div className='my-10 '>
 						{/* <!-- Alerts Item --> */}
 						<div className='flex w-full bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9'>
-							<div className=' flex items-center justify-between gap-4'>
-								<li className=' flex gap-2 items-center list-none'>
+							<div className='flex items-center justify-between gap-4 '>
+								<li className='flex items-center gap-2 list-none '>
 									<h3 className='font-semibold text-gray-800 dark:text-white'>
 										Total Users
 									</h3>
 									<p>{users?.length} </p>
 								</li>
 
-								<li className=' flex gap-2 items-center list-none'>
+								<li className='flex items-center gap-2 list-none '>
 									<h3 className='font-semibold text-gray-800 dark:text-white'>
 										Active Users
 									</h3>
