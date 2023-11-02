@@ -50,7 +50,7 @@ const DropdownNotification = () => {
 		}
 
 		if (isError) {
-			console.log(error);
+			console.log('error', error);
 		}
 	}, [u_isSuccess, notifications, isError, error]);
 
