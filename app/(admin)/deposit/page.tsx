@@ -69,15 +69,11 @@ const Deposits = () => {
 		},
 		{
 			field: 'approve_at',
-			headerName: 'Approved At',
+			headerName: 'Update At',
 			width: 150,
 			renderCell: (params: any) => (
 				<div className='flex items-center gap-2 text-xs'>
-					{params.row.status === 'approved' ? (
-						<p>{params.row.approve_at}</p>
-					) : (
-						<p className='text-red-500 '>Not Approved Yet</p>
-					)}
+					<p>{params.row.updated_at}</p>
 				</div>
 			),
 		},
@@ -148,21 +144,33 @@ const Deposits = () => {
 		},
 		{
 			field: 'approved_by',
-			headerName: 'Updated By',
+			headerName: 'Controller',
 			width: 150,
 			renderCell: (params: any) => (
 				<div className='flex items-center gap-2 text-xs'>
-					{params.row.status === 'approved' ? (
+					{params.row.status === 'pending' ? (
 						<>
-							<p>{params.row.approved_by}</p>
-							<FaExternalLinkAlt className='text-sm cursor-pointer text-primary' />
+							<p>Not Updated Yet!</p>
 						</>
 					) : (
-						<p>Not Approved</p>
+						<>
+							{params.row.status === 'approved' ? (
+								<>
+									<p>{params.row.approved_by}</p>
+									<FaExternalLinkAlt className='text-sm cursor-pointer text-primary' />
+								</>
+							) : (
+								<>
+									<p>{params.row.rejected_by}</p>
+									<FaExternalLinkAlt className='text-sm cursor-pointer text-primary' />
+								</>
+							)}
+						</>
 					)}
 				</div>
 			),
 		},
+
 		{
 			field: 'action',
 			headerName: 'Action',
@@ -195,7 +203,8 @@ const Deposits = () => {
 				date: formDateWithTime(deposit.createdAt),
 				tnx_id: deposit.transactionId,
 				approved_by: deposit.approved_by,
-				approve_at: formDateWithTime(deposit.approvedAt),
+				rejected_by: deposit.rejected_by,
+				updated_at: formDateWithTime(deposit.updatedAt),
 			});
 		});
 	return (

@@ -32,10 +32,8 @@ const Deposit = ({ params }: { params: { depositId: string } }) => {
 	const {
 		amount,
 		createdAt,
-		approvedAt,
+		updatedAt,
 		customer_id,
-		is_approved,
-		is_rejected,
 		name,
 		phone,
 		status,
@@ -121,6 +119,14 @@ const Deposit = ({ params }: { params: { depositId: string } }) => {
 	return (
 		<div>
 			<div className='px-4 py-1 list-none border text-blue-gray-400 '>
+				{/* Name */}
+				<div className='grid grid-cols-2'>
+					<li> Name</li>
+					<li className='text-end'>{name}</li>
+				</div>
+				{/* Name */}
+				<hr className='my-2 ' />
+
 				{/* Amount */}
 				<div className='grid grid-cols-2'>
 					<li>Amount</li>
@@ -187,9 +193,9 @@ const Deposit = ({ params }: { params: { depositId: string } }) => {
 				</div>
 				<hr className='my-2 ' />
 				<div className='grid grid-cols-2'>
-					<li>Approved At</li>
+					<li>Updated At</li>
 					<li className='text-end'>
-						{new Date(approvedAt).toLocaleDateString('en-US', {
+						{new Date(updatedAt).toLocaleDateString('en-US', {
 							year: 'numeric',
 							month: 'short',
 							day: 'numeric',

@@ -122,9 +122,47 @@ const Users = () => {
 			headerName: 'Balance',
 			width: 130,
 			renderCell: (params: any) => (
-				<div className='flex items-center gap-2 text-xs'>
+				<div className='flex flex-col gap-2 text-xs'>
 					<p>
+						M:{' '}
 						{Number(params.row.balance).toLocaleString('en-US', {
+							style: 'currency',
+							currency: 'USD',
+						})}
+					</p>
+					<p>
+						D:{' '}
+						{Number(params.row.total_deposit).toLocaleString('en-US', {
+							style: 'currency',
+							currency: 'USD',
+						})}
+					</p>
+				</div>
+			),
+		},
+		{
+			field: 'total_earing',
+			headerName: 'Total Earn',
+			width: 100,
+			renderCell: (params: any) => (
+				<div className='flex flex-col gap-2 text-xs'>
+					<p>
+						{Number(params.row.total_earing).toLocaleString('en-US', {
+							style: 'currency',
+							currency: 'USD',
+						})}
+					</p>
+				</div>
+			),
+		},
+		{
+			field: 'total_withdraw',
+			headerName: 'Total W',
+			width: 100,
+			renderCell: (params: any) => (
+				<div className='flex flex-col gap-2 text-xs'>
+					<p>
+						{Number(params.row.total_withdraw).toLocaleString('en-US', {
 							style: 'currency',
 							currency: 'USD',
 						})}
@@ -201,7 +239,7 @@ const Users = () => {
 						className='d-flex align-items-center justify-content-center w-100'
 						style={{ cursor: 'pointer' }}
 					>
-						<Link href={`/deposit/${params.row.id}`} passHref>
+						<Link href={`/users/${params.row.id}`} passHref>
 							<AiFillEye className='text-2xl text-primary' />
 						</Link>
 					</div>
@@ -228,6 +266,9 @@ const Users = () => {
 				refer_by: user?.sponsor?.username,
 				active_at: formDateWithTime(user.active_date),
 				last_subscription_date: formDateWithTime(user.last_subscription_date),
+				total_deposit: user.total_deposit,
+				total_earing: user.total_earing,
+				total_withdraw: user.total_withdraw,
 			});
 		});
 	return (
