@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useGetDepositsQuery } from '@/redux/features/deposit/depositApi';
 import Link from 'next/link';
-import { formatDate } from '@/lib/functions';
+import { formDateWithTime } from '@/lib/functions';
 import { AiFillEye } from 'react-icons/ai';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { SyncLoader } from 'react-spinners';
@@ -60,10 +60,24 @@ const Deposits = () => {
 		{
 			field: 'date',
 			headerName: 'Created At',
-			width: 130,
+			width: 150,
 			renderCell: (params: any) => (
 				<div className='flex items-center gap-2 text-xs'>
 					<p>{params.row.date}</p>
+				</div>
+			),
+		},
+		{
+			field: 'approve_at',
+			headerName: 'Approved At',
+			width: 150,
+			renderCell: (params: any) => (
+				<div className='flex items-center gap-2 text-xs'>
+					{params.row.status === 'approved' ? (
+						<p>{params.row.approve_at}</p>
+					) : (
+						<p className='text-red-500 '>Not Approved Yet</p>
+					)}
 				</div>
 			),
 		},
@@ -134,7 +148,7 @@ const Deposits = () => {
 		},
 		{
 			field: 'approved_by',
-			headerName: 'Approved By',
+			headerName: 'Updated By',
 			width: 150,
 			renderCell: (params: any) => (
 				<div className='flex items-center gap-2 text-xs'>
@@ -178,9 +192,10 @@ const Deposits = () => {
 				customer_id: deposit.customer_id,
 				amount: deposit.amount,
 				status: deposit.status,
-				date: formatDate(deposit.createdAt),
+				date: formDateWithTime(deposit.createdAt),
 				tnx_id: deposit.transactionId,
 				approved_by: deposit.approved_by,
+				approve_at: formDateWithTime(deposit.approvedAt),
 			});
 		});
 	return (

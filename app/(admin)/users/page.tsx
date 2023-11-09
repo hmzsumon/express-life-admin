@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useGetDepositsQuery } from '@/redux/features/deposit/depositApi';
 import Link from 'next/link';
-import { formatDate } from '@/lib/functions';
+import { formatDate, formDateWithTime } from '@/lib/functions';
 import { AiFillEye } from 'react-icons/ai';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { SyncLoader } from 'react-spinners';
@@ -66,10 +66,31 @@ const Users = () => {
 		{
 			field: 'date',
 			headerName: 'Created At',
-			width: 130,
+			width: 150,
 			renderCell: (params: any) => (
 				<div className='flex items-center gap-2 text-xs'>
 					<p>{params.row.date}</p>
+				</div>
+			),
+		},
+
+		{
+			field: 'active_at',
+			headerName: 'Active at',
+			width: 150,
+			renderCell: (params: any) => (
+				<div className='flex items-center gap-2 text-xs'>
+					{params.row.status ? (
+						<>
+							{params.row.active_at ? (
+								<p>{params.row.active_at}</p>
+							) : (
+								<p>{params.row.last_subscription_date}</p>
+							)}
+						</>
+					) : (
+						<p>Not Active</p>
+					)}
 				</div>
 			),
 		},
@@ -205,6 +226,8 @@ const Users = () => {
 				tnx_id: user.transactionId,
 				approved_by: user.approved_by,
 				refer_by: user?.sponsor?.username,
+				active_at: formDateWithTime(user.active_date),
+				last_subscription_date: formDateWithTime(user.last_subscription_date),
 			});
 		});
 	return (
