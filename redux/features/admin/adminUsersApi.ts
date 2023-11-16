@@ -70,6 +70,26 @@ export const adminUsersApi = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ['User'],
 		}),
+
+		// change status
+		changeStatus: builder.mutation<void, any>({
+			query: (data) => ({
+				url: `/change-user-status`,
+				method: 'PUT',
+				body: data,
+			}),
+			invalidatesTags: ['User', 'Users'],
+		}),
+
+		// change block status
+		changeBlockStatus: builder.mutation<void, any>({
+			query: (data) => ({
+				url: `/change-block-status`,
+				method: 'PUT',
+				body: data,
+			}),
+			invalidatesTags: ['User', 'Users'],
+		}),
 	}),
 });
 
@@ -80,4 +100,6 @@ export const {
 	useCreatePasswordMutation,
 	useUpdateUserMutation,
 	useDeleteUserMutation,
+	useChangeStatusMutation,
+	useChangeBlockStatusMutation,
 } = adminUsersApi;

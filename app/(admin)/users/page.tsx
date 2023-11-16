@@ -220,6 +220,28 @@ const Users = () => {
 			},
 		},
 		{
+			field: 'block',
+			headerName: 'Block',
+			width: 150,
+			renderCell: (params: any) => {
+				return (
+					<div className='flex items-center'>
+						{params.row.block === true && (
+							<p className='text-danger '>
+								<span>Blocked</span>
+							</p>
+						)}
+
+						{params.row.block === false && (
+							<p className='text-success '>
+								<span>Not Blocked</span>
+							</p>
+						)}
+					</div>
+				);
+			},
+		},
+		{
 			field: 'refer_by',
 			headerName: 'Refer By',
 			width: 150,
@@ -269,6 +291,7 @@ const Users = () => {
 				total_deposit: user.total_deposit,
 				total_earing: user.total_earing,
 				total_withdraw: user.total_withdraw,
+				block: user.is_block,
 			});
 		});
 	return (
