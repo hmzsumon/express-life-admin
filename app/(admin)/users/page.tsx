@@ -116,6 +116,16 @@ const Users = () => {
 				</div>
 			),
 		},
+		{
+			field: 'rank',
+			headerName: 'Rank',
+			width: 130,
+			renderCell: (params: any) => (
+				<div className='flex items-center gap-2 text-xs'>
+					<p>{params.row.rank}</p>
+				</div>
+			),
+		},
 
 		{
 			field: 'balance',
@@ -292,6 +302,7 @@ const Users = () => {
 				total_earing: user.total_earing,
 				total_withdraw: user.total_withdraw,
 				block: user.is_block,
+				rank: user.rank,
 			});
 		});
 	return (

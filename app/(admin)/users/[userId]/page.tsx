@@ -10,6 +10,8 @@ import {
 	useChangeStatusMutation,
 } from '@/redux/features/admin/adminUsersApi';
 
+import { FaExternalLinkAlt } from 'react-icons/fa';
+
 const UserDetails = ({ params }: { params: { userId: string } }) => {
 	const [
 		changeStatus,
@@ -307,6 +309,12 @@ const UserDetails = ({ params }: { params: { userId: string } }) => {
 						<p>
 							<span className='font-bold'>Password:</span>
 							{text_password}
+						</p>
+						<p className='flex items-center gap-2'>
+							<span className='font-bold'>All Transaction:</span>
+							<span>
+								<FaExternalLinkAlt className='text-sm text-blue' />
+							</span>
 						</p>
 					</div>
 				</div>
