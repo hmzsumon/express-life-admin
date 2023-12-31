@@ -107,6 +107,15 @@ export const adminUsersApi = apiSlice.injectEndpoints({
 				body: data,
 			}),
 		}),
+
+		// deduce money
+		deduceMoney: builder.mutation<any, any>({
+			query: (data) => ({
+				url: `/admin/deduct_money`,
+				method: 'PUT',
+				body: data,
+			}),
+		}),
 	}),
 });
 
@@ -121,4 +130,5 @@ export const {
 	useChangeBlockStatusMutation,
 	useFindUserByEmailOrUsernameMutation,
 	useAdminAddMoneyMutation,
+	useDeduceMoneyMutation,
 } = adminUsersApi;
