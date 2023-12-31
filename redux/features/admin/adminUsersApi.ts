@@ -90,6 +90,23 @@ export const adminUsersApi = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ['User', 'Users'],
 		}),
+
+		// find user by email or username
+		findUserByEmailOrUsername: builder.mutation<any, any>({
+			query: (emailOrUserName) => ({
+				url: `/find-user-by-email-username?emailOrUsername=${emailOrUserName}`,
+				method: 'PUT',
+			}),
+		}),
+
+		// admin add money
+		adminAddMoney: builder.mutation<any, any>({
+			query: (data) => ({
+				url: `/admin/add_money`,
+				method: 'POST',
+				body: data,
+			}),
+		}),
 	}),
 });
 
@@ -102,4 +119,6 @@ export const {
 	useDeleteUserMutation,
 	useChangeStatusMutation,
 	useChangeBlockStatusMutation,
+	useFindUserByEmailOrUsernameMutation,
+	useAdminAddMoneyMutation,
 } = adminUsersApi;

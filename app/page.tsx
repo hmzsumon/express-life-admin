@@ -2,12 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { fetchBaseQueryError } from '@/redux/helpers';
-
 import { useLoginUserMutation } from '@/redux/features/auth/authApi';
 import { useRouter } from 'next/navigation';
 import { PulseLoader } from 'react-spinners';
 import Link from 'next/link';
-import TawkTo3 from '@/lib/TawkTo3';
 
 export default function Home() {
 	const router = useRouter();
@@ -59,12 +57,12 @@ export default function Home() {
 		if (isError) {
 			toast.error((error as fetchBaseQueryError).data?.message);
 		}
-	}, [isSuccess, isError, error]);
+	}, [isSuccess, isError, error, router]);
 
 	return (
 		<div>
 			{/* <ECommerce /> */}
-			<div className='w-6/12 mx-auto mt-20'>
+			<div className='w-full px-4 mx-auto mt-20 md:w-6/12'>
 				<div className='bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark'>
 					<div className='border-b rounded-lg border-stroke py-4 px-6.5 dark:border-strokedark'>
 						<h3 className='text-xl font-bold text-center text-black dark:text-white'>
@@ -87,7 +85,7 @@ export default function Home() {
 								/>
 							</div>
 
-							<div className=' relative'>
+							<div className='relative '>
 								<label className='mb-2.5 block text-black dark:text-white'>
 									Password
 								</label>
@@ -191,7 +189,6 @@ export default function Home() {
 					</form>
 				</div>
 			</div>
-			<TawkTo3 />
 		</div>
 	);
 }
